@@ -1,0 +1,43 @@
+classDiagram
+    class users {
+        +UUID id
+        +String name
+        +String userType
+    }
+
+    class pharmacists {
+        +UUID id
+        +String licenseNumber
+    }
+
+    class customers {
+        +UUID id
+        +Int loyaltyPoints
+    }
+
+    class medicines {
+        +String medID
+        +String name
+        +Float price
+        +UUID managedBy
+    }
+
+    class receipts {
+        +String receiptID
+        +UUID customerID
+        +Float total
+    }
+
+    class receipt_items {
+        +String id
+        +String receiptID
+        +String medID
+        +Int quantity
+    }
+
+    users "1" -- "1" pharmacists : id
+    users "1" -- "1" customers : id
+    pharmacists "1" --> "*" medicines : managedBy
+    customers "1" --> "*" receipts : customerID
+    receipts "1" --> "*" receipt_items : receiptID
+    medicines "1" --> "*" receipt_items : medID
