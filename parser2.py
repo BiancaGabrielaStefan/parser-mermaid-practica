@@ -98,7 +98,6 @@ def main():
                     f_txt.write(f"  - {item}\n")
             else:
                 f_txt.write(f"{metrica}: {val}\n")
-        f_txt.write("\n--------------------\n")
 
     # salvare in excel (fisier csv)
     for key, valoare in rez.items():

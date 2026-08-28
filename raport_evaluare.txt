@@ -29,5 +29,3 @@ Detalii Relatii (Multiplicitati):
   - User[-] <|-- Customer[-]
   - Pharmacist[1] --> Medicine[*]
   - Receipt[1] *-- Medicine[*]
-
---------------------
