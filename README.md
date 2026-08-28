@@ -1,9 +1,16 @@
 # Evaluarea Capacității Asistenților AI de a Genera Arhitecturi Software (UML)
 
 ## Structură Repo
- * `parser_mermaid.py` - Scriptul principal dezvoltat în Python. Folosește Expresii Regulate (Regex) pentru a parsa codul Mermaid și a contoriza elementele OOP.
- * `cod_mermaid.txt` - Fișierul de input în care se introduce codul diagramei ce urmează a fi analizată.
- * `rezultate.csv` - Fișierul de output generat de script, conținând datele extrase (actualizat prin *append* la fiecare rulare).
+* `cod_mermaid.txt` - Fișierul de input în care se introduce codul diagramei ce urmează a fi analizată.
+
+**Versiunea 1 (Inițială):**
+* `parser_mermaid.py` - Scriptul de bază care extrage clasele, atributele, metodele și relațiile.
+* `rezultate.csv` - Fișierul de output generat de prima versiune a scriptului.
+
+**Versiunea 2 (Îmbunătățită):**
+* `parser2.py` - Versiunea actualizată a parserului, care include detectarea claselor abstracte și filtre avansate.
+* `rezultate2.csv` - Noul fișier tabelar generat de V2, cu formatarea relațiilor ajustată pentru Excel.
+* `raport_evaluare.txt` - Fișier nou, generat de V2, care oferă o vizualizare text clară și ușor de citit (human-readable) a elementelor extrase.
 * Domeniile testate (pe 3 niveluri de complexitate a prompturilor):
   1. *Platformă de E-Learning*
   2. *Sistem de gestiune a unei farmacii*
@@ -21,7 +28,13 @@ Scriptul verifică mai întâi dacă fișierul conține declarația `classDiagra
   * *Compoziții:* `*--` sau `--*`
   * *Asocieri simple:* `-->`, `<--` sau `--`
 
-### 2. Funcția `main`
+  ### 2. Îmbunătățiri în V2 (`mermaid_parser2`)
+Pentru a rezolva limitările primei versiuni, au fost adăugate următoarele funcționalități:
+* **Detectarea claselor abstracte:** Implementarea căutării etichetei `<<abstract>>`. Scriptul adaugă automat sufixul `(Abstract)` la numele clasei, verificând astfel aplicarea corectă a polimorfismului.
+* **Filtrarea atributelor:** Regex-ul a fost rafinat (`^[ \t\xa0]*...`) pentru a ignora automat liniile goale și caracterele de tip *non-breaking space*.
+* **Formatare sigură pentru Excel:** S-a modificat sintaxa de ieșire pentru tipurile de relații din formatul cu slash (`X / Y / Z`) în formatul: (`A:X | C:Y | M:Z`). Această ajustare previne comportamentul de auto-formatare al aplicației, care convertea eronat datele extrase în date calendaristice.
+
+### 3. Funcția `main`
 * **Conversia datelor structurate:** Listele și tuplurile extrase de Regex sunt parcurse și transformate în string-uri separate prin virgulă folosind metoda `.join()`, pentru a preveni erorile de formatare în Excel
 * **Append Mode:** Scriptul verifică dacă fișierul `rezultate.csv` există sau este gol (`os.path.getsize`). Dacă este un test nou, generează dinamic capul de tabel (`writer.writerow(rez.keys())`). Apoi, adaugă rezultatele noii rulări pe un rând nou (`mode='a'`), iar astfel permite rularea testelor succesive fără a pierde datele anterioare
 

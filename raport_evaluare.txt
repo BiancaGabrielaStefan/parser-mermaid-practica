@@ -1,0 +1,33 @@
+--RAPORT EVALUARE--
+Format valid: True
+Clase gasite:
+  - User (Abstract)
+  - Pharmacist
+  - Customer
+  - Medicine
+  - Receipt
+Total Atribute: 9
+Lista Atribute (Viz | Denumire):
+  - User -> [#] UUID id
+  - User -> [#] String name
+  - Pharmacist -> [-] String licenseNumber
+  - Customer -> [-] Int loyaltyPoints
+  - Medicine -> [-] String medID
+  - Medicine -> [-] String name
+  - Medicine -> [-] Float price
+  - Receipt -> [-] String receiptID
+  - Receipt -> [-] Float total
+Total Metode: 3
+Lista Metode (Viz | Denumire):
+  - User -> [+] login() void
+  - Pharmacist -> [+] add_medicine() void
+  - Customer -> [+] buy_medicine() void
+Total Relatii: 4
+Tipuri Relatii (A/C/M): A:1 | C:1 | M:2
+Detalii Relatii (Multiplicitati):
+  - User[-] <|-- Pharmacist[-]
+  - User[-] <|-- Customer[-]
+  - Pharmacist[1] --> Medicine[*]
+  - Receipt[1] *-- Medicine[*]
+
+--------------------

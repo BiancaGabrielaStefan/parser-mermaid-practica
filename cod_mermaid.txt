@@ -1,43 +1,35 @@
 classDiagram
-    class users {
-        +UUID id
-        +String name
-        +String userType
+    classDiagram
+    class User {
+        <<abstract>>
+        #UUID id
+        #String name
+        +login() void
     }
 
-    class pharmacists {
-        +UUID id
-        +String licenseNumber
+    class Pharmacist {
+        -String licenseNumber
+        +add_medicine() void
     }
 
-    class customers {
-        +UUID id
-        +Int loyaltyPoints
+    class Customer {
+        -Int loyaltyPoints
+        +buy_medicine() void
     }
 
-    class medicines {
-        +String medID
-        +String name
-        +Float price
-        +UUID managedBy
+    class Medicine {
+        -String medID
+        -String name
+        -Float price
     }
 
-    class receipts {
-        +String receiptID
-        +UUID customerID
-        +Float total
+    class Receipt {
+        -String receiptID
+        -Float total
     }
 
-    class receipt_items {
-        +String id
-        +String receiptID
-        +String medID
-        +Int quantity
-    }
+    User <|-- Pharmacist
+    User <|-- Customer
 
-    users "1" -- "1" pharmacists : id
-    users "1" -- "1" customers : id
-    pharmacists "1" --> "*" medicines : managedBy
-    customers "1" --> "*" receipts : customerID
-    receipts "1" --> "*" receipt_items : receiptID
-    medicines "1" --> "*" receipt_items : medID
+    Pharmacist "1" --> "*" Medicine : manages
+    Receipt "1" *-- "*" Medicine : contains
