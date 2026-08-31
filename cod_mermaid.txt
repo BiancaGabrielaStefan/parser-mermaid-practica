@@ -1,35 +1,76 @@
 classDiagram
-    classDiagram
     class User {
-        <<abstract>>
-        #UUID id
-        #String name
-        +login() void
+        -int userId
+        -String name
+        -String email
+        -String password
+        -String role
+        +login()
+        +logout()
     }
-
+    class Manager {
+        -String role="manager"
+        +generateReport()
+    }
     class Pharmacist {
         -String licenseNumber
-        +add_medicine() void
+        +dispenseMedication()
     }
-
-    class Customer {
-        -Int loyaltyPoints
-        +buy_medicine() void
-    }
-
-    class Medicine {
-        -String medID
+    class Patient {
+        -int patientId
         -String name
-        -Float price
+        -String phone
+        -String insuranceId
+        +getPatient()
+        +addPatient()
+    }
+    class Medication {
+        -int medicationId
+        -String name
+        -float price
+        -boolean requiresPrescription
+        +getMedication()
+        +updateStock()
+    }
+    class Category {
+        -int categoryId
+        -String name
+        +getCategory()
+    }
+    class Supplier {
+        -int supplierId
+        -String name
+        -String contact
+        +getSupplier()
+    }
+    class Prescription {
+        -int prescriptionId
+        -String doctorName
+        -Date dateIssued
+        +verifyPrescription()
+    }
+    class Sale {
+        -int saleId
+        -Date date
+        -float totalAmount
+        +createSale()
+        +calculateTotal()
+    }
+    class SaleItem {
+        -int saleItemId
+        -int quantity
+        -float subtotal
+        +calculateSubtotal()
     }
 
-    class Receipt {
-        -String receiptID
-        -Float total
-    }
-
+    User <|-- Manager
     User <|-- Pharmacist
-    User <|-- Customer
 
-    Pharmacist "1" --> "*" Medicine : manages
-    Receipt "1" *-- "*" Medicine : contains
+    Category "1" -- "*" Medication : +contains
+    Supplier "1" -- "*" Medication : +supplies
+    Patient "1" -- "*" Prescription : +owns
+    Prescription "*" -- "*" Medication : +includes
+    Pharmacist "1" -- "*" Sale : +processes
+    Patient "1" -- "*" Sale : +makes
+    Sale "1" *-- "1..*" SaleItem : +has
+    SaleItem "*" --> "1" Medication : +references

@@ -11,7 +11,7 @@ def mermaid_parser(code_text):
     nr_classes = len(classes)
     
     # nr de variabile
-    attributes = re.findall(r'^[ \t]*[+\-#~]\s*[^()\n]+$', code_text, re.MULTILINE)
+    attributes = re.findall(r'^[ \t]*(?!class\b)[+\-#~]?\s*[a-zA-Z0-9_]+\s+[a-zA-Z0-9_]+\s*$', code_text, re.MULTILINE)
     nr_attributes = len(attributes)
     
     # nr de metode
@@ -51,8 +51,10 @@ def mermaid_parser(code_text):
 # TESTARE
 
 def main():
-    nume_fisier = "cod_mermaid.txt"
-    fisier_export = "rezultate.csv"
+    # generare cale absoluta pe baza locatiei scriptului
+    curent_dir = os.path.dirname(os.path.abspath(__file__))
+    nume_fisier = os.path.join(curent_dir, "cod_mermaid.txt")
+    fisier_export = os.path.join(curent_dir, "rezultate.csv")
     
     if not os.path.exists(nume_fisier):
         print(f"Eroare: Fisierul '{nume_fisier}' nu a fost gasit!")

@@ -1,31 +1,73 @@
 --RAPORT EVALUARE--
 Format valid: True
 Clase gasite:
-  - User (Abstract)
+  - User
+  - Manager
   - Pharmacist
-  - Customer
-  - Medicine
-  - Receipt
-Total Atribute: 9
+  - Patient
+  - Medication
+  - Category
+  - Supplier
+  - Prescription
+  - Sale
+  - SaleItem
+Total Atribute: 29
 Lista Atribute (Viz | Denumire):
-  - User -> [#] UUID id
-  - User -> [#] String name
+  - User -> [-] int userId
+  - User -> [-] String name
+  - User -> [-] String email
+  - User -> [-] String password
+  - User -> [-] String role
+  - Manager -> [-] String role="manager"
   - Pharmacist -> [-] String licenseNumber
-  - Customer -> [-] Int loyaltyPoints
-  - Medicine -> [-] String medID
-  - Medicine -> [-] String name
-  - Medicine -> [-] Float price
-  - Receipt -> [-] String receiptID
-  - Receipt -> [-] Float total
-Total Metode: 3
+  - Patient -> [-] int patientId
+  - Patient -> [-] String name
+  - Patient -> [-] String phone
+  - Patient -> [-] String insuranceId
+  - Medication -> [-] int medicationId
+  - Medication -> [-] String name
+  - Medication -> [-] float price
+  - Medication -> [-] boolean requiresPrescription
+  - Category -> [-] int categoryId
+  - Category -> [-] String name
+  - Supplier -> [-] int supplierId
+  - Supplier -> [-] String name
+  - Supplier -> [-] String contact
+  - Prescription -> [-] int prescriptionId
+  - Prescription -> [-] String doctorName
+  - Prescription -> [-] Date dateIssued
+  - Sale -> [-] int saleId
+  - Sale -> [-] Date date
+  - Sale -> [-] float totalAmount
+  - SaleItem -> [-] int saleItemId
+  - SaleItem -> [-] int quantity
+  - SaleItem -> [-] float subtotal
+Total Metode: 14
 Lista Metode (Viz | Denumire):
-  - User -> [+] login() void
-  - Pharmacist -> [+] add_medicine() void
-  - Customer -> [+] buy_medicine() void
-Total Relatii: 4
-Tipuri Relatii (A/C/M): A:1 | C:1 | M:2
+  - User -> [+] login()
+  - User -> [+] logout()
+  - Manager -> [+] generateReport()
+  - Pharmacist -> [+] dispenseMedication()
+  - Patient -> [+] getPatient()
+  - Patient -> [+] addPatient()
+  - Medication -> [+] getMedication()
+  - Medication -> [+] updateStock()
+  - Category -> [+] getCategory()
+  - Supplier -> [+] getSupplier()
+  - Prescription -> [+] verifyPrescription()
+  - Sale -> [+] createSale()
+  - Sale -> [+] calculateTotal()
+  - SaleItem -> [+] calculateSubtotal()
+Total Relatii: 10
+Tipuri Relatii (A/C/M): A:7 | C:1 | M:2
 Detalii Relatii (Multiplicitati):
+  - User[-] <|-- Manager[-]
   - User[-] <|-- Pharmacist[-]
-  - User[-] <|-- Customer[-]
-  - Pharmacist[1] --> Medicine[*]
-  - Receipt[1] *-- Medicine[*]
+  - Category[1] -- Medication[*]
+  - Supplier[1] -- Medication[*]
+  - Patient[1] -- Prescription[*]
+  - Prescription[*] -- Medication[*]
+  - Pharmacist[1] -- Sale[*]
+  - Patient[1] -- Sale[*]
+  - Sale[1] *-- SaleItem[1..*]
+  - SaleItem[*] --> Medication[1]
